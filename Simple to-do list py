@@ -1,0 +1,106 @@
+#Simple Todo in python
+_Simple To-Do List_
+todo_list = []
+
+while True:
+    print("\n1. Add")//to add
+    print("2. Remove")//to remove 
+    print("3. Show")//to display
+    print("4. Exit")//to exit
+
+    choice = input("Choose: ")
+
+    if choice == "1":
+        task = input("Add task: ")
+        todo_list.append(task)
+    elif choice == "2":
+        task = input("Remove task: ")
+        if task in todo_list:
+            todo_list.remove(task)
+        else:
+            print("Task not found!")
+    elif choice == "3":
+        print("To-Do List:")
+        for task in todo_list:
+            print(task)
+    elif choice == "4":
+        break
+    else:
+        print("Invalid choice!")
+
+_To-Do List with Storage_
+import json
+
+def save_todo_list(todo_list):
+    with open("todo_list.json", "w") as f:
+        json.dump(todo_list, f)
+
+def load_todo_list():
+    try:
+        with open("todo_list.json", "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
+
+todo_list = load_todo_list()
+
+while True:
+    print("\n1. Add")
+    print("2. Remove")
+    print("3. Show")
+    print("4. Save and Exit")
+
+    choice = input("Choose: ")
+
+    if choice == "1":
+        task = input("Add task: ")
+        todo_list.append(task)
+    elif choice == "2":
+        task = input("Remove task: ")
+        if task in todo_list:
+            todo_list.remove(task)
+        else:
+            print("Task not found!")
+    elif choice == "3":
+        print("To-Do List:")
+        for task in todo_list:
+            print(task)
+    elif choice == "4":
+        save_todo_list(todo_list)
+        break
+    else:
+        print("Invalid choice!")
+
+_To-Do List with Due Dates_
+import datetime
+
+todo_list = []
+
+while True:
+    print("\n1. Add")
+    print("2. Remove")
+    print("3. Show")
+    print("4. Exit")
+
+    choice = input("Choose: ")
+
+    if choice == "1":
+        task = input("Add task: ")
+        due_date = input("Due date (YYYY-MM-DD): ")
+        todo_list.append({"task": task, "due_date": datetime.datetime.strptime(due_date, "%Y-%m-%d")})
+    elif choice == "2":
+        task = input("Remove task: ")
+        for item in todo_list:
+            if item["task"] == task:
+                todo_list.remove(item)
+                break
+        else:
+            print("Task not found!")
+    elif choice == "3":
+        print("To-Do List:")
+        for item in todo_list:
+            print(f"{item['task']} - {item['due_date'].strftime('%Y-%m-%d')}")
+    elif choice == "4":
+        break
+    else:
+        print("Invalid choice!);
